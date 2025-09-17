@@ -1260,7 +1260,7 @@ std::vector<Polyline<Real>> parallelOffset(Polyline<Real> const &pline, Real off
   if (pline.size() < 2) {
     return std::vector<Polyline<Real>>();
   }
-  auto rawOffset = createRawOffsetPline(pline, offset);
+  auto rawOffset = createRawOffsetPline(pline, getArea(pline) >= 0 ? offset : -offset);
   if (pline.isClosed() && !hasSelfIntersects) {
     auto slices = slicesFromRawOffset(pline, rawOffset, offset);
     return stitchOffsetSlicesTogether(slices, pline.isClosed(), rawOffset.size() - 1);
