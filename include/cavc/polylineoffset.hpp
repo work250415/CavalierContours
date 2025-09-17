@@ -143,7 +143,11 @@ void lineToLineJoin(PlineOffsetSegment<Real> const &s1, PlineOffsetSegment<Real>
     case LineSeg2LineSeg2IntrType::False:
       if (intrResult.t0 > Real(1) && falseIntersect(intrResult.t1)) {
         // extend and join the lines together using an arc
-        connectUsingArc();
+        // connectUsingArc();
+        // extend the lines to intersect
+        Vector2<Real> dir = s1.v2.pos() - s1.v1.pos();
+        Vector2<Real> newPos = s1.v1.pos() + dir* intrResult.t0;
+        addOrReplaceIfSamePos(result,PlineVertex<Real>(newPos,Real(0)));
       } else {
         addOrReplaceIfSamePos(result, PlineVertex<Real>(v2.pos(), Real(0)));
         addOrReplaceIfSamePos(result, u1);
